@@ -22,6 +22,23 @@ func inputEquation(order *int, args []int) string {
 	return buffer.String()
 }
 
+func outputEquation(args []int) string {
+	var buffer strings.Builder
+	var d int
+	order := len(args) - 1
+	for i := order; i > 0; i-- {
+		d = args[len(args)-1-i] * i
+		if i > 2 {
+			buffer.WriteString(fmt.Sprintf("%dx^%d + ", d, order-1))
+		} else if i == 2 {
+			buffer.WriteString(fmt.Sprintf("%dx + ", d))
+		} else {
+			buffer.WriteString(fmt.Sprintf("%d ", d))
+		}
+	}
+	return buffer.String()
+}
+
 func main() {
 	order := flag.Int("order", -1, "The order of the equation to be derived")
 	flag.Parse()
@@ -41,6 +58,8 @@ func main() {
 		}
 	}
 
-	input := inputEquation(order, intArgs)
-	fmt.Println(input)
+	fmt.Println(inputEquation(order, intArgs))
+	fmt.Println("Deriving...")
+	fmt.Println(outputEquation(intArgs))
+
 }
